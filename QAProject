@@ -143,23 +143,23 @@ namespace QAProject
         {
             Console.WriteLine($"Relevé de notes pour l'étudiant numéro {numEtudiant}:");
 
-           foreach (Notes note in notes)
-{
-    if (note.NumEtudiant == numEtudiant)
-    {
-        Etudiant etudiant = etudiants.Find(e => e.NumEtudiant == numEtudiant);
-        Cours coursNote = cours.Find(c => c.NumCours == note.NumCours);
+                       foreach (Notes note in notes)
+            {
+                if (note.numEtudiant == numEtudiant)
+                {
+                    Etudiant etudiant = etudiants.Find(e => e.numEtudiant == numEtudiant);
+                    Cours coursNote = cours.Find(c => c.numCours == note.numCours);
 
-        if (etudiant != null && coursNote != null)
-        {
-            Console.WriteLine($"Cours: {coursNote.Titre} ({coursNote.Code}), Note: {note.Note}");
-        }
-        else
-        {
-            Console.WriteLine("Erreur : Les informations sur l'étudiant ou le cours sont introuvables.");
-        }
-    }
-}
+                    if (etudiant != null && coursNote != null)
+                    {
+                        Console.WriteLine($"Cours: {coursNote.titre} ({coursNote.code}), Note: {note.note}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Erreur : Les informations sur l'étudiant ou le cours sont introuvables.");
+                    }
+                }
+            }
         }
     }
 }
