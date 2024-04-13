@@ -65,7 +65,7 @@ namespace QAProject
             List<Cours> cours = new List<Cours>();
             List<Notes> notes = new List<Notes>();
 
-            // Saisie du nombre d'étudiants
+            // Demande à l'utilisateur de saisir le nombre d'étudiants
             Console.WriteLine("Entrez le nombre d'étudiants:");
             int nombreEtudiants = int.Parse(Console.ReadLine());
 
@@ -84,7 +84,7 @@ namespace QAProject
                 etudiants.Add(new Etudiant(nom, prenom, numEtudiant));
             }
 
-            // Saisie du nombre de cours
+           // Demande à l'utilisateur de saisir le nombre de cours
             Console.WriteLine("Entrez le nombre de cours:");
             int nombreCours = int.Parse(Console.ReadLine());
 
@@ -113,8 +113,45 @@ namespace QAProject
                     notes.Add(new Notes(note, etudiant.numEtudiant, cours1.numCours));
                 }
             }
+ // Enregistrement des données dans des fichiers texte
+            EnregistrerDonnees(etudiants, "etudiants.txt");
+            EnregistrerDonnees(cours, "cours.txt");
+            EnregistrerDonnees(notes, "notes.txt");
+
+            // Affichage du relevé de notes en temps réel
+            Console.WriteLine("Entrez le numéro de l'étudiant pour afficher le relevé de notes:");
+            int numEtudiantReleve = int.Parse(Console.ReadLine());
+            AfficherReleveNotes(etudiants, cours, notes, numEtudiantReleve);
 
             Console.ReadLine();
+        }
+
+        // Méthode pour enregistrer les données dans un fichier texte
+        static void EnregistrerDonnees<T>(List<T> data, string fileName)
+        {
+            using (StreamWriter writer = new StreamWriter(fileName))
+            {
+                foreach (T item in data)
+                {
+                    writer.WriteLine(item.ToString());
+                }
+            }
+        }
+
+        // Méthode pour afficher le relevé de notes pour un étudiant donné
+        static void AfficherReleveNotes(List<Etudiant> etudiants, List<Cours> cours, List<Notes> notes, int numEtudiant)
+        {
+            Console.WriteLine($"Relevé de notes pour l'étudiant numéro {numEtudiant}:");
+
+            foreach (Notes note in notes)
+            {
+                if (note.NumEtudiant == numEtudiant)
+                {
+                    Etudiant etudiant = etudiants.Find(e => e.NumEtudiant == numEtudiant);
+                    Cours coursNote = cours.Find(c => c.NumCours == note.NumCours);
+                    Console.WriteLine($"Cours: {coursNote.Titre} ({coursNote.Code}), Note: {note.Note}");
+                }
+            }
         }
     }
 }
