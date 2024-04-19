@@ -119,7 +119,6 @@ namespace QAProject
                     Console.WriteLine(" ");
                 }
             }
-            
             // Enregistrement des données dans des fichiers texte
             EnregistrerDonnees(etudiants, "etudiants.txt");
             EnregistrerDonnees(cours, "cours.txt");
@@ -136,10 +135,6 @@ namespace QAProject
                 Console.WriteLine("Souhaitez vous afficher un autre relevé de notes ? (O/N)");
                 answer = Console.ReadLine();
             } while (answer == "O" || answer == "o");
-            
-            Console.WriteLine("Entrez le numéro de l'étudiant pour afficher le relevé de notes:");
-            int numEtudiantReleve = int.Parse(Console.ReadLine());
-            AfficherReleveNotes(etudiants, cours, notes, numEtudiantReleve);
 
             Console.ReadLine();
         }
@@ -170,17 +165,6 @@ namespace QAProject
 
                 if (note.numEtudiant == numEtudiant)
                 {
-
-            Console.WriteLine($"Relevé de notes pour l'étudiant numéro {numEtudiant}:");
-
-                       foreach (Notes note in notes)
-            {
-                if (note.numEtudiant == numEtudiant)
-                {
-                    Etudiant etudiant = etudiants.Find(e => e.numEtudiant == numEtudiant);
-                    Cours coursNote = cours.Find(c => c.numCours == note.numCours);
-
-
                     if (etudiant != null && coursNote != null)
                     {
                         Console.WriteLine($"Cours: {coursNote.titre} ({coursNote.code}), Note: {note.note}");
