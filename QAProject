@@ -22,6 +22,11 @@ namespace QAProject
             this.prenom = prenom;
             this.numEtudiant = numEtudiant;
         }
+
+         public override string ToString()
+        {
+            return $"Nom: {nom}, prenom: {prenom}, numero d'étudiant: {numEtudiant}";
+        }
     }
 
     // Creation de la classe Cours
@@ -38,6 +43,11 @@ namespace QAProject
             this.code = code;
             this.numCours = numCours;
         }
+
+        public override string ToString()
+        {
+            return $"Titre: {titre}, code: {code}, numero du cours: {numCours}";
+        }
     }
 
     // Creation de la classe Notes
@@ -53,6 +63,11 @@ namespace QAProject
             this.note = note;
             this.numEtudiant = numEtudiant;
             this.numCours = numCours;
+        }
+
+        public override string ToString()
+        {
+            return $"numéro d'étudiant: {numEtudiant}, numero du cours: {numCours}, note: {note}";
         }
     }
 
@@ -120,9 +135,9 @@ namespace QAProject
                 }
             }
             // Enregistrement des données dans des fichiers texte
-            EnregistrerDonnees(etudiants, "etudiants.txt");
-            EnregistrerDonnees(cours, "cours.txt");
-            EnregistrerDonnees(notes, "notes.txt");
+            enregistrerDonnees(etudiants, "etudiants.txt");
+            enregistrerDonnees(cours, "cours.txt");
+            enregistrerDonnees(notes, "notes.txt");
 
             // Affichage du relevé de notes en temps réel
             string answer;
@@ -130,7 +145,7 @@ namespace QAProject
             {
                 Console.WriteLine("Entrez le numéro de l'étudiant pour afficher le relevé de notes:");
                 int numEtudiantReleve = int.Parse(Console.ReadLine());
-                AfficherReleveNotes(etudiants, cours, notes, numEtudiantReleve);
+                afficherReleveNotes(etudiants, cours, notes, numEtudiantReleve);
 
                 Console.WriteLine("Souhaitez vous afficher un autre relevé de notes ? (O/N)");
                 answer = Console.ReadLine();
@@ -140,7 +155,7 @@ namespace QAProject
         }
 
         // Méthode pour enregistrer les données dans un fichier texte
-        static void EnregistrerDonnees<T>(List<T> data, string fileName)
+        static void enregistrerDonnees<T>(List<T> data, string fileName)
         {
             using (StreamWriter writer = new StreamWriter(fileName))
             {
@@ -152,7 +167,7 @@ namespace QAProject
         }
 
         // Méthode pour afficher le relevé de notes pour un étudiant donné
-        static void AfficherReleveNotes(List<Etudiant> etudiants, List<Cours> cours, List<Notes> notes, int numEtudiant)
+        static void afficherReleveNotes(List<Etudiant> etudiants, List<Cours> cours, List<Notes> notes, int numEtudiant)
         {
 
             Etudiant etudiant = etudiants.Find(e => e.numEtudiant == numEtudiant);
