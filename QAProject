@@ -16,7 +16,7 @@ namespace QAProject
         public int numEtudiant;
 
         // Constructeur
-        public Etudiant (string nom, string prenom, int numEtudiant)
+        public Etudiant(string nom, string prenom, int numEtudiant)
         {
             this.nom = nom;
             this.prenom = prenom;
@@ -72,35 +72,39 @@ namespace QAProject
             // Saisie des informations sur les étudiants
             for (int i = 0; i < nombreEtudiants; i++)
             {
-                Console.WriteLine($"Entrez le nom de l'étudiant {i+1}:");
+                Console.WriteLine($"Entrez le nom de l'étudiant {i + 1}:");
                 string nom = Console.ReadLine();
 
-                Console.WriteLine($"Entrez le prénom de l'étudiant {i+1}:");
+                Console.WriteLine($"Entrez le prénom de l'étudiant {i + 1}:");
                 string prenom = Console.ReadLine();
 
-                Console.WriteLine($"Entrez le numéro de l'étudiant {i+1}:");
+                Console.WriteLine($"Entrez le numéro de l'étudiant {i + 1}:");
                 int numEtudiant = int.Parse(Console.ReadLine());
 
                 etudiants.Add(new Etudiant(nom, prenom, numEtudiant));
+
+                Console.WriteLine(" ");
             }
 
-           // Demande à l'utilisateur de saisir le nombre de cours
+            // Demande à l'utilisateur de saisir le nombre de cours
             Console.WriteLine("Entrez le nombre de cours:");
             int nombreCours = int.Parse(Console.ReadLine());
 
             // Saisie des informations sur les cours
             for (int i = 0; i < nombreCours; i++)
             {
-                Console.WriteLine($"Entrez le titre du cours {i+1}:");
+                Console.WriteLine($"Entrez le titre du cours {i + 1}:");
                 string titre = Console.ReadLine();
 
-                Console.WriteLine($"Entrez le code du cours {i+1}:");
+                Console.WriteLine($"Entrez le code du cours {i + 1}:");
                 string code = Console.ReadLine();
 
-                Console.WriteLine($"Entrez le numéro du cours {i+1}:");
+                Console.WriteLine($"Entrez le numéro du cours {i + 1}:");
                 int numCours = int.Parse(Console.ReadLine());
 
                 cours.Add(new Cours(titre, code, numCours));
+
+                Console.WriteLine(" ");
             }
 
             // Saisie des notes
@@ -111,14 +115,28 @@ namespace QAProject
                     Console.WriteLine($"Entrez la note pour {etudiant.nom} {etudiant.prenom} ({etudiant.numEtudiant}) pour le cours {cours1.titre} ({cours1.code}):");
                     int note = int.Parse(Console.ReadLine());
                     notes.Add(new Notes(note, etudiant.numEtudiant, cours1.numCours));
+
+                    Console.WriteLine(" ");
                 }
             }
- // Enregistrement des données dans des fichiers texte
+            
+            // Enregistrement des données dans des fichiers texte
             EnregistrerDonnees(etudiants, "etudiants.txt");
             EnregistrerDonnees(cours, "cours.txt");
             EnregistrerDonnees(notes, "notes.txt");
 
             // Affichage du relevé de notes en temps réel
+            string answer;
+            do
+            {
+                Console.WriteLine("Entrez le numéro de l'étudiant pour afficher le relevé de notes:");
+                int numEtudiantReleve = int.Parse(Console.ReadLine());
+                AfficherReleveNotes(etudiants, cours, notes, numEtudiantReleve);
+
+                Console.WriteLine("Souhaitez vous afficher un autre relevé de notes ? (O/N)");
+                answer = Console.ReadLine();
+            } while (answer == "O" || answer == "o");
+            
             Console.WriteLine("Entrez le numéro de l'étudiant pour afficher le relevé de notes:");
             int numEtudiantReleve = int.Parse(Console.ReadLine());
             AfficherReleveNotes(etudiants, cours, notes, numEtudiantReleve);
@@ -141,6 +159,18 @@ namespace QAProject
         // Méthode pour afficher le relevé de notes pour un étudiant donné
         static void AfficherReleveNotes(List<Etudiant> etudiants, List<Cours> cours, List<Notes> notes, int numEtudiant)
         {
+
+            Etudiant etudiant = etudiants.Find(e => e.numEtudiant == numEtudiant);
+
+            Console.WriteLine($"Relevé de notes pour l'étudiant(e) {etudiant.nom} {etudiant.prenom} ({etudiant.numEtudiant}):");
+
+            foreach (Notes note in notes)
+            {
+                Cours coursNote = cours.Find(c => c.numCours == note.numCours);
+
+                if (note.numEtudiant == numEtudiant)
+                {
+
             Console.WriteLine($"Relevé de notes pour l'étudiant numéro {numEtudiant}:");
 
                        foreach (Notes note in notes)
@@ -149,6 +179,7 @@ namespace QAProject
                 {
                     Etudiant etudiant = etudiants.Find(e => e.numEtudiant == numEtudiant);
                     Cours coursNote = cours.Find(c => c.numCours == note.numCours);
+
 
                     if (etudiant != null && coursNote != null)
                     {
